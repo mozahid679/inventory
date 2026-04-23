@@ -1,90 +1,75 @@
 <?php
 
-namespace Tests\Feature\Settings;
-
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class AppearanceUpdateTest extends TestCase
-{
-    use RefreshDatabase;
+test('appearance settings screen can be rendered', function () {
+    $user = User::factory()->create();
 
-    public function test_appearance_settings_screen_can_be_rendered(): void
-    {
-        $user = User::factory()->create();
+    $response = $this->actingAs($user)->get('/settings/appearance');
 
-        $response = $this->actingAs($user)->get('/settings/appearance');
+    $response->assertStatus(200);
+});
 
-        $response->assertStatus(200);
-    }
+test('users can update theme to light', function () {
+    $user = User::factory()->create([
+        'theme_preference' => 'system',
+    ]);
 
-    public function test_users_can_update_theme_to_light(): void
-    {
-        $user = User::factory()->create([
-            'theme_preference' => 'system',
-        ]);
-
-        $response = $this->actingAs($user)
-            ->from('/settings/appearance')
-            ->put('/settings/appearance', [
-                'theme_preference' => 'light',
-            ]);
-
-        $response->assertSessionHasNoErrors();
-        $response->assertRedirect('/settings/appearance');
-        
-        $this->assertEquals('light', $user->refresh()->theme_preference);
-    }
-
-    public function test_users_can_update_theme_to_dark(): void
-    {
-        $user = User::factory()->create([
+    $response = $this->actingAs($user)
+        ->from('/settings/appearance')
+        ->put('/settings/appearance', [
             'theme_preference' => 'light',
         ]);
 
-        $response = $this->actingAs($user)->put('/settings/appearance', [
-            'theme_preference' => 'dark',
-        ]);
+    $response->assertSessionHasNoErrors();
+    $response->assertRedirect('/settings/appearance');
 
-        $response->assertSessionHasNoErrors();
-        $this->assertEquals('dark', $user->refresh()->theme_preference);
-    }
+    expect($user->refresh()->theme_preference)->toEqual('light');
+});
 
-    public function test_users_can_update_theme_to_system(): void
-    {
-        $user = User::factory()->create([
-            'theme_preference' => 'dark',
-        ]);
+test('users can update theme to dark', function () {
+    $user = User::factory()->create([
+        'theme_preference' => 'light',
+    ]);
 
-        $response = $this->actingAs($user)->put('/settings/appearance', [
-            'theme_preference' => 'system',
-        ]);
+    $response = $this->actingAs($user)->put('/settings/appearance', [
+        'theme_preference' => 'dark',
+    ]);
 
-        $response->assertSessionHasNoErrors();
-        $this->assertEquals('system', $user->refresh()->theme_preference);
-    }
+    $response->assertSessionHasNoErrors();
+    expect($user->refresh()->theme_preference)->toEqual('dark');
+});
 
-    public function test_theme_update_requires_valid_value(): void
-    {
-        $user = User::factory()->create([
-            'theme_preference' => 'system',
-        ]);
+test('users can update theme to system', function () {
+    $user = User::factory()->create([
+        'theme_preference' => 'dark',
+    ]);
 
-        $response = $this->actingAs($user)->put('/settings/appearance', [
-            'theme_preference' => 'invalid-theme',
-        ]);
+    $response = $this->actingAs($user)->put('/settings/appearance', [
+        'theme_preference' => 'system',
+    ]);
 
-        $response->assertSessionHasErrors('theme_preference');
-        $this->assertEquals('system', $user->refresh()->theme_preference);
-    }
+    $response->assertSessionHasNoErrors();
+    expect($user->refresh()->theme_preference)->toEqual('system');
+});
 
-    public function test_guests_cannot_update_theme_preference(): void
-    {
-        $response = $this->put('/settings/appearance', [
-            'theme_preference' => 'dark',
-        ]);
+test('theme update requires valid value', function () {
+    $user = User::factory()->create([
+        'theme_preference' => 'system',
+    ]);
 
-        $response->assertRedirect('/login');
-    }
-}
+    $response = $this->actingAs($user)->put('/settings/appearance', [
+        'theme_preference' => 'invalid-theme',
+    ]);
+
+    $response->assertSessionHasErrors('theme_preference');
+    expect($user->refresh()->theme_preference)->toEqual('system');
+});
+
+test('guests cannot update theme preference', function () {
+    $response = $this->put('/settings/appearance', [
+        'theme_preference' => 'dark',
+    ]);
+
+    $response->assertRedirect('/login');
+});
