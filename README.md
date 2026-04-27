@@ -89,4 +89,4 @@ Open a Pull Request
 📄 License
 Distributed under the MIT License. See LICENSE for more information.
 
-Built with ❤️ by Mozahidul Islam (fb.me/mozahid679)
+Built with ❤️ by Mozahidul Islam (https://fb.me/mozahid679)
