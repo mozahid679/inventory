@@ -1,12 +1,12 @@
-# 📦 AssetFlow: Enterprise Asset Intelligence
+# 📦 inventory: Enterprise Asset Intelligence
 
 [![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-AssetFlow is a high-performance, modern Asset Inventory Management System built to help organizations track, manage, and optimize their physical hardware and equipment lifecycle.
+inventory is a high-performance, modern Asset Inventory Management System built to help organizations track, manage, and optimize their physical hardware and equipment lifecycle.
 
-[Explore Demo](#) · [Report Bug](https://github.com/yourusername/assetflow/issues) · [Request Feature](https://github.com/yourusername/assetflow/issues)
+[Explore Demo](#) · [Report Bug](https://github.com/mozahid679/inventory/issues) · [Request Feature](https://github.com/mozahid679/inventory/issues)
 
 ---
 
@@ -21,9 +21,9 @@ AssetFlow is a high-performance, modern Asset Inventory Management System built 
 
 ## 🛠 Tech Stack
 
-- **Framework**: [Laravel 11](https://laravel.com)
+- **Framework**: [Laravel 12](https://laravel.com)
 - **Frontend**: [Tailwind CSS](https://tailwindcss.com) & [Alpine.js](https://alpinejs.dev)
-- **Database**: PostgreSQL / MySQL
+- **Database**: MySQL
 - **Icons**: [Lucide Icons](https://lucide.dev)
 - **Auth**: Laravel Breeze / Fortify
 
@@ -39,8 +39,8 @@ AssetFlow is a high-performance, modern Asset Inventory Management System built 
 
 1. **Clone the repository**
     ```bash
-    git clone [https://github.com/yourusername/assetflow.git](https://github.com/yourusername/assetflow.git)
-    cd assetflow
+    git clone [https://github.com/mozahid679/inventory.git](https://github.com/mozahid679/inventory.git)
+    cd inventory
     Install dependencies
     ```
 
@@ -64,7 +64,7 @@ npm run dev
 php artisan serve
 📸 Preview
 Modern Interface
-AssetFlow utilizes a "Geist-inspired" design, focusing on high-contrast typography and a clean "bento-box" grid layout for data visualization.
+inventory utilizes a "Geist-inspired" design, focusing on high-contrast typography and a clean "bento-box" grid layout for data visualization.
 
 Dashboard Structure
 Active Assets: Live count of deployed hardware.
