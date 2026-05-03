@@ -1,7 +1,6 @@
 <x-layouts.app>
     <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
 
-        <!-- HEADER -->
         <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div>
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
@@ -19,10 +18,8 @@
             </button>
         </div>
 
-        <!-- STATS -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            <!-- TOTAL STOCK IN -->
             <div class="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
                 <h3 class="text-sm font-medium uppercase text-gray-500">Total Stock In</h3>
 
@@ -31,7 +28,6 @@
                 </p>
             </div>
 
-            <!-- UNIQUE SUPPLIERS -->
             <div class="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
                 <h3 class="text-sm font-medium uppercase text-gray-500">Suppliers</h3>
 
@@ -42,19 +38,16 @@
                 </div>
             </div>
 
-            <!-- TOTAL CHALLANS -->
             <div class="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
                 <h3 class="text-sm font-medium uppercase text-gray-500">Total Challans</h3>
 
                 <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-                    {{-- {{ $product->stockInItems->pluck('stockIn_id')->unique()->count() }} --}}
                     {{ $product->stockInItems->map(fn($i) => $i->stockIn->id)->unique()->count() }}
                 </p>
             </div>
 
         </div>
 
-        <!-- TABLE -->
         <div class="overflow-hidden rounded-lg bg-white shadow dark:bg-gray-800">
 
             <div class="border-b p-6 dark:border-gray-700">
@@ -82,27 +75,22 @@
                         @foreach ($product->stockInItems as $item)
                             <tr>
 
-                                <!-- CHALLAN -->
                                 <td class="px-6 py-4 font-medium text-blue-600">
                                     #{{ $item->stockIn->challan_no }}
                                 </td>
 
-                                <!-- DATE -->
                                 <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
                                     {{ $item->stockIn->received_at }}
                                 </td>
 
-                                <!-- QTY -->
                                 <td class="px-6 py-4 font-bold text-gray-900 dark:text-white">
                                     {{ $item->quantity }}
                                 </td>
 
-                                <!-- SUPPLIER -->
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">
                                     {{ $item->stockIn->supplier->name ?? 'N/A' }}
                                 </td>
 
-                                <!-- USER -->
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">
                                     {{ $item->stockIn->approver->name ?? 'System' }}
                                 </td>
@@ -113,8 +101,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
-
     </div>
 </x-layouts.app>

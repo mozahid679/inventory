@@ -14,7 +14,7 @@
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product Type
                                 *</label>
                             <select
-                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                 name="product_type_id" required>
                                 <option value="">Select Type</option>
                                 @foreach ($types as $type)
@@ -26,7 +26,7 @@
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category Name
                                 *</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                 name="name" type="text" required>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
                             <select
-                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 px-2 py-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                 name="status">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
@@ -45,7 +45,7 @@
                             <label
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                             <textarea
-                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 px-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                 name="description" rows="3"></textarea>
                         </div>
                     </div>

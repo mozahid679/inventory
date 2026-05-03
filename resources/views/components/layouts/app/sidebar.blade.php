@@ -107,9 +107,8 @@
                                 @endrole
                             </div>
 
-
                             <!-- Example two level -->
-                            <x-layouts.sidebar-two-level-link-parent title="Reports" icon="fas-house" :active="request()->routeIs('admin.reports.*')">
+                            {{-- <x-layouts.sidebar-two-level-link-parent title="Reports" icon="fas-house" :active="request()->routeIs('admin.reports.*')">
                                 <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.category_wise') }}"
                                     icon='fas-house' :active="request()->routeIs('admin.reports.category_wise*')">Category Wise</x-layouts.sidebar-two-level-link>
 
@@ -131,10 +130,52 @@
                                     href="{{ route('admin.reports.consumable_summary') }}" icon='fas-house'
                                     :active="request()->routeIs('admin.reports.consumable_summary*')">Consumable Summary</x-layouts.sidebar-two-level-link>
 
-
                                 <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.consumable_stock') }}"
                                     icon='fas-house' :active="request()->routeIs('admin.reports.consumable_stock*')">Consumable
                                     Stock</x-layouts.sidebar-two-level-link>
+
+                            </x-layouts.sidebar-two-level-link-parent> --}}
+
+                            <x-layouts.sidebar-two-level-link-parent title="Reports" icon="fas-chart-line"
+                                :active="request()->routeIs('admin.reports.*')">
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.category_wise') }}"
+                                    icon="fas-layer-group" :active="request()->routeIs('admin.reports.category_wise*')">
+                                    Category Wise
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.asset_issued_detail') }}" icon="fas-clipboard-list"
+                                    :active="request()->routeIs('admin.reports.asset_issued_detail*')">
+                                    Asset Issued Detail
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.product_wise') }}"
+                                    icon="fas-box" :active="request()->routeIs('admin.reports.product_wise*')">
+                                    Product Wise
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.supplier_wise') }}"
+                                    icon="fas-truck-loading" :active="request()->routeIs('admin.reports.supplier_wise*')">
+                                    Supplier Wise
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.asset_current_status') }}" icon="fas-info-circle"
+                                    :active="request()->routeIs('admin.reports.asset_current_status*')">
+                                    Asset Current Status
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.consumable_summary') }}" icon="fas-file-invoice"
+                                    :active="request()->routeIs('admin.reports.consumable_summary*')">
+                                    Consumable Summary
+                                </x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.consumable_stock') }}"
+                                    icon="fas-warehouse" :active="request()->routeIs('admin.reports.consumable_stock*')">
+                                    Consumable Stock
+                                </x-layouts.sidebar-two-level-link>
 
                             </x-layouts.sidebar-two-level-link-parent>
 

@@ -77,11 +77,25 @@
                             @enderror
                         </div>
 
-                        <button
-                            class="w-full rounded-lg bg-green-600 py-3 font-bold text-white transition hover:bg-green-700"
-                            type="submit">
-                            Publish Product
-                        </button>
+                        <div
+                            class="mt-6 flex flex-col items-center justify-end gap-3 border-t border-gray-100 pt-6 sm:flex-row dark:border-gray-800">
+                            <!-- Cancel Link: Subtle Ghost/Glass Style -->
+                            <a class="inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:text-gray-900 active:scale-95 sm:w-auto dark:border-gray-700 dark:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                                href="{{ route('admin.products.index') }}">
+                                Cancel
+                            </a>
+
+                            <!-- Submit Button: Modern High-Contrast Style -->
+                            <button
+                                class="inline-flex w-full items-center justify-center rounded-lg bg-gray-900 px-8 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-800 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 active:scale-95 sm:w-auto dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus:ring-emerald-500"
+                                type="submit">
+                                <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                Publish Product
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
