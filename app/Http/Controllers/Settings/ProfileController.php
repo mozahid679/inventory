@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -25,6 +26,10 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'phone_no' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif,heic,heif,avif', 'max:5120'],
             'email' => [
                 'required',
                 'string',
@@ -37,13 +42,21 @@ class ProfileController extends Controller
 
         $user->fill($validated);
 
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+
+            $user->photo = $request->file('photo')->store('photos', 'public');
+        }
+
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
         $user->save();
 
-        return to_route('settings.profile.edit')->with('status', __('Profile updated successfully'));
+        return to_route('settings.profile.edit')->with('status', 'profile-updated');
     }
 
     public function destroy(Request $request): RedirectResponse

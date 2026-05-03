@@ -1,111 +1,135 @@
 <x-layouts.app>
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="mb-8 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Inventory Overview</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Real-time status of your organizational assets.</p>
+            </div>
+            <div
+                class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-600 dark:bg-emerald-900/30">
+                System Online: {{ now()->format('d M, Y') }}
+            </div>
+        </div>
 
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('Dashboard')}}</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('Welcome to the dashboard') }}</p>
+        <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Total Assets</p>
+                        <h3 class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $totalAssets }}</h3>
+                    </div>
+                    <div class="rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
+                        <i class="fas fa-boxes-stacked text-xl text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-blue-600">
+                    <a class="hover:underline" href="{{ route('admin.products.index') }}">View details →</a>
+                </div>
+            </div>
+
+            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Active Suppliers</p>
+                        <h3 class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $totalSuppliers }}</h3>
+                    </div>
+                    <div class="rounded-lg bg-emerald-50 p-3 dark:bg-emerald-900/20">
+                        <i class="fas fa-truck-field text-xl text-emerald-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-gray-400">Managing {{ $totalCategories }} categories</div>
+            </div>
+
+            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Total Users</p>
+                        <h3 class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $totalUsers }}</h3>
+                    </div>
+                    <div class="rounded-lg bg-indigo-50 p-3 dark:bg-indigo-900/20">
+                        <i class="fas fa-users text-xl text-indigo-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-gray-400">Managing {{ $totalRoles }} roles</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="border-b border-gray-100 p-5 dark:border-gray-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">Recently Added Assets</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead
+                            class="border-b border-gray-100 text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:border-gray-800">
+                            <tr>
+                                <th class="px-4 py-3">Asset & Challan</th>
+                                <th class="px-4 py-3">Supplier</th>
+                                <th class="px-4 py-3 text-right">Qty Received</th>
+                                <th class="px-4 py-3 text-right">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50 dark:divide-gray-800">
+                            @foreach ($recentAssets as $item)
+                                <tr class="transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <td class="px-4 py-4">
+                                        <div class="font-semibold text-gray-900 dark:text-white">
+                                            {{ $item->product->name }}
+                                        </div>
+                                        <div class="flex items-center gap-1 text-xs text-gray-500">
+                                            <i class="fas fa-file-invoice text-[10px]"></i>
+                                            <span>#{{ $item->stockIn->challan_no }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <a class="group"
+                                            href="{{ route('admin.suppliers.show', $item->stockIn->supplier->id) }}">
+                                            <span
+                                                class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 transition-colors group-hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:group-hover:bg-blue-800/30">
+                                                <i
+                                                    class="fas fa-external-link-alt mr-1 text-[9px] opacity-0 transition-opacity group-hover:opacity-100"></i>
+                                                {{ $item->stockIn->supplier->name ?? 'N/A' }}
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <span class="font-mono font-bold text-green-600 dark:text-green-400">
+                                            +{{ number_format($item->quantity) }}
+                                        </span>
+                                    </td>
+                                    <td class="whitespace-nowrap px-4 py-4 text-right text-xs text-gray-400">
+                                        {{ $item->created_at->format('M d, Y') }}
+                                        <span
+                                            class="block text-[10px] opacity-70">{{ $item->created_at->diffForHumans() }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="border-b border-gray-100 p-5 dark:border-gray-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">Quick Management</h3>
+                </div>
+                <div class="grid grid-cols-2 gap-4 p-6">
+                    <a class="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 transition hover:bg-blue-50 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-blue-900/30"
+                        href="{{ route('admin.products.create') }}">
+                        <i class="fas fa-plus mb-2 text-blue-500"></i>
+                        <span class="text-xs font-semibold dark:text-gray-200">New Product</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 transition hover:bg-purple-50 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-purple-900/30"
+                        href="{{ route('admin.permissions.index') }}">
+                        <i class="fas fa-shield-halved mb-2 text-purple-500"></i>
+                        <span class="text-xs font-semibold dark:text-gray-200">Security Access</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Users') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 dark:text-blue-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Revenue Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Revenue') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 dark:text-green-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Orders Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Orders') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-purple-100 dark:bg-purple-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500 dark:text-purple-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Visitors Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Visitors') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-orange-100 dark:bg-orange-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-500 dark:text-orange-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </x-layouts.app>

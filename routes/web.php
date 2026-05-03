@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductTypeController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\RequisitionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -15,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -31,12 +34,37 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 
 Route::middleware(['auth'])->prefix('admin')->as('admin.')->group(function () {
 
-    Route::resource('product-types', ProductTypeController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
+
+    // Stock Management
     Route::resource('stock-ins', StockInController::class);
+    Route::post('stock-ins/{stockIn}/approve', [StockInController::class, 'approve'])
+        ->name('stock-ins.approve');
+
+    // Requisition Management
+    Route::resource('requisitions', RequisitionController::class);
+    Route::post('requisitions/{requisition}/review', [RequisitionController::class, 'review'])->name('requisitions.review');
+    Route::post('requisitions/{requisition}/approve', [RequisitionController::class, 'approve'])->name('requisitions.approve');
+    Route::post('requisitions/{requisition}/acknowledge', [RequisitionController::class, 'acknowledge'])->name('requisitions.acknowledge');
+
+    // Route::get('reports/{type?}', [ReportController::class, 'index'])->name('reports.index');
+    // Reports Group
+    Route::prefix('reports')->as('reports.')->group(function () {
+        Route::get('/category-wise', [ReportController::class, 'categoryWise'])->name('category_wise');
+        Route::get('/asset-issued-detail', [ReportController::class, 'assetIssuedDetail'])->name('asset_issued_detail');
+        Route::get('/product-wise', [ReportController::class, 'productWise'])->name('product_wise');
+        Route::get('/supplier-wise', [ReportController::class, 'supplierWise'])->name('supplier_wise');
+        Route::get('/asset-current-status', [ReportController::class, 'assetCurrentStatus'])->name('asset_current_status');
+        Route::get('/consumable-summary', [ReportController::class, 'consumableSummary'])->name('consumable_summary');
+        Route::get('/consumable-stock', [ReportController::class, 'consumableStock'])->name('consumable_stock');
+    });
 });
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {});
+
+Route::post('stock-ins/{stockIn}/approve', [StockInController::class, 'approve'])->name('stock-ins.approve');
 
 
 Route::group(['middleware' => ['can:user_management_access']], function () {
@@ -44,6 +72,7 @@ Route::group(['middleware' => ['can:user_management_access']], function () {
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::resource('product-types', ProductTypeController::class);
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('suppliers', SupplierController::class);

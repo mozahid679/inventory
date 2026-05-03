@@ -29,10 +29,12 @@
                                     Suppliers
                                 </x-layouts.sidebar-link>
 
-                                <x-layouts.sidebar-link href="{{ route('admin.product-types.index') }}" icon='fas-tags'
-                                    :active="request()->routeIs('admin.product-types*')">
-                                    Category Type(s)
-                                </x-layouts.sidebar-link>
+                                @can('role_management_access')
+                                    <x-layouts.sidebar-link href="{{ route('admin.product-types.index') }}" icon='fas-tags'
+                                        :active="request()->routeIs('admin.product-types*')">
+                                        Category Type(s)
+                                    </x-layouts.sidebar-link>
+                                @endcan
 
                                 <x-layouts.sidebar-link href="{{ route('admin.categories.index') }}"
                                     icon='fas-layer-group' :active="request()->routeIs('admin.categories*')">
@@ -49,6 +51,102 @@
                                     Product Stock
                                 </x-layouts.sidebar-link>
                             </div>
+
+                            {{-- Requisitions Section --}}
+                            {{-- <div class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                Inventory Flow
+                            </div>
+
+                            <x-layouts.sidebar-link href="{{ route('admin.requisitions.index') }}"
+                                icon="fas-file-invoice" :active="request()->routeIs('admin.requisitions.*')">
+                                @role('Employee')
+                                    My Requisitions
+                                @else
+                                    All Requisitions
+                                @endrole
+
+                                @role(['Store Keeper', 'Approval Authority (IT)', 'Approval Authority (Non-IT)'])
+                                    @php $pendingCount = \App\Models\Requisition::whereIn('status', [0, 1])->count(); @endphp
+                                    @if ($pendingCount > 0)
+                                        <span
+                                            class="ml-auto animate-pulse rounded-full bg-amber-600 px-1.5 py-0.5 text-[10px] text-white">
+                                            {{ $pendingCount }}
+                                        </span>
+                                    @endif
+                                @endrole
+                            </x-layouts.sidebar-link> --}}
+
+
+                            <div class="space-y-2">
+                                <p class="py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    Inventory Flow
+                                </p>
+
+                                {{-- 1. My Requisitions: Visible to Everyone --}}
+                                <x-layouts.sidebar-link
+                                    href="{{ route('admin.requisitions.index', ['filter' => 'mine']) }}"
+                                    icon='fas-truck-field' :active="request()->get('filter') == 'mine'">
+
+                                    My Requisitions
+                                </x-layouts.sidebar-link>
+
+                                {{-- 2. All Requisitions: Visible only to specific Roles --}}
+                                @role([
+                                    'Store Keeper',
+                                    'Approval Authority (IT)',
+                                    'Approval Authority (Non-IT)',
+                                    'System
+                                    Admin',
+                                    'admin',
+                                    ])
+                                    <x-layouts.sidebar-link href="{{ route('admin.requisitions.index') }}"
+                                        icon="fas-file-invoice" :active="request()->routeIs('admin.requisitions.index') &&
+                                            !request()->has('filter')">
+                                        All Requisitions
+                                    </x-layouts.sidebar-link>
+                                @endrole
+                            </div>
+
+
+                            <!-- Example two level -->
+                            <x-layouts.sidebar-two-level-link-parent title="Reports" icon="fas-house" :active="request()->routeIs('admin.reports.*')">
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.category_wise') }}"
+                                    icon='fas-house' :active="request()->routeIs('admin.reports.category_wise*')">Category Wise</x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.asset_issued_detail') }}" icon='fas-house'
+                                    :active="request()->routeIs('admin.reports.asset_issued_detail*')">Asset Issued Detail</x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.product_wise') }}"
+                                    icon='fas-house' :active="request()->routeIs('admin.reports.product_wise*')">Product Wise</x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.supplier_wise') }}"
+                                    icon='fas-house' :active="request()->routeIs('admin.reports.supplier_wise*')">Supplier Wise</x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.asset_current_status') }}" icon='fas-house'
+                                    :active="request()->routeIs('admin.reports.asset_current_status*')">Asset Current Status</x-layouts.sidebar-two-level-link>
+
+                                <x-layouts.sidebar-two-level-link
+                                    href="{{ route('admin.reports.consumable_summary') }}" icon='fas-house'
+                                    :active="request()->routeIs('admin.reports.consumable_summary*')">Consumable Summary</x-layouts.sidebar-two-level-link>
+
+
+                                <x-layouts.sidebar-two-level-link href="{{ route('admin.reports.consumable_stock') }}"
+                                    icon='fas-house' :active="request()->routeIs('admin.reports.consumable_stock*')">Consumable
+                                    Stock</x-layouts.sidebar-two-level-link>
+
+                            </x-layouts.sidebar-two-level-link-parent>
+
+
+
+
+                            @role('Super Admin')
+                                <x-layouts.sidebar-link href="{{ route('admin.users.index') }}" icon="fas-users-cog">
+                                    User Management
+                                </x-layouts.sidebar-link>
+                            @endrole
+
 
                             @canany(['role_management_access', 'permission_management_access',
                                 'user_management_access'])
@@ -80,14 +178,9 @@
                                 </div>
                             @endcanany
 
-                            {{-- <!-- Example two level -->
-                            <x-layouts.sidebar-two-level-link-parent title="Example two level" icon="fas-house"
-                                :active="request()->routeIs('two-level*')">
-                                <x-layouts.sidebar-two-level-link href="#" icon='fas-house'
-                                    :active="request()->routeIs('two-level*')">Child</x-layouts.sidebar-two-level-link>
-                            </x-layouts.sidebar-two-level-link-parent>
 
-                            <!-- Example three level -->
+
+                            {{-- <!-- Example three level -->
                             <x-layouts.sidebar-two-level-link-parent title="Example three level" icon="fas-house"
                                 :active="request()->routeIs('three-level*')">
                                 <x-layouts.sidebar-two-level-link href="#" icon='fas-house'

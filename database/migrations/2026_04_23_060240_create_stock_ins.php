@@ -15,9 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained();
             $table->string('challan_no')->unique();
+
+            // Status: 0=Pending, 1=Approved, 2=Rejected
+            $table->tinyInteger('status')->default(0);
+
+            $table->foreignId('approved_by')->nullable()->constrained('users');
+            $table->timestamp('approved_at')->nullable();
+
             $table->string('challan_image')->nullable();
             $table->date('received_at');
-            $table->integer('stock_quantity')->default(0);
             $table->text('note')->nullable();
             $table->timestamps();
         });

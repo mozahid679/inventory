@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -58,6 +59,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255|unique:products,name',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'required|boolean',
         ]);
@@ -92,6 +94,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:products,name,' . $product->id,
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'required|boolean',
@@ -112,7 +115,16 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
     }
+    public function show(Product $product)
+    {
+        $product->load([
+            'category',
+            'stockInItems.stockIn.supplier',
+            'stockInItems.stockIn.approver'
+        ]);
 
+        return view('admin.products.show', compact('product'));
+    }
     /**
      * Remove the specified product from storage.
      */

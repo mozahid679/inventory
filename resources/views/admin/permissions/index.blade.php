@@ -35,7 +35,7 @@
                                 placeholder="Enter permission name..." required>
 
                             @error('name')
-                                <p class="absolute -bottom-5 left-0 text-[10px] font-medium text-red-500">
+                                <p class="absolute -bottom-5 left-0 text-xs font-medium text-red-500">
                                     {{ $message }}</p>
                             @enderror
                         </div>
@@ -43,7 +43,7 @@
                         <button
                             class="group inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-200 transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:shadow-none"
                             type="submit">
-                            <span>+ Add Permission</span>
+                            <span>Add Permission</span>
                             <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round"

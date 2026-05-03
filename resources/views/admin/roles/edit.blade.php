@@ -9,7 +9,8 @@
                             {{ __('Editing') }} <span class="font-medium text-gray-500 dark:text-gray-400">/</span>
                             <span class="text-blue-600 dark:text-blue-400">{{ $role->name }}</span>
                         </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Modify role{{ $role->name }} details and
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Modify role: <span
+                                class="font-medium text-blue-400">{{ $role->name }}</span> details and
                             permissions</p>
                     </div>
                 </div>
@@ -37,7 +38,7 @@
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role
                                 Name</label>
                             <input
-                                class="mt-1 block rounded-md border-gray-300 px-2 py-1.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-600"
+                                class="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-600"
                                 name="name" type="text" value="{{ $role->name }}">
                         </div>
 
@@ -48,13 +49,16 @@
                             </h3>
                             <div class="space-y-2">
                                 @foreach ($roles as $role)
-                                    <label class="flex items-center">
+                                    <label class="group flex cursor-pointer items-center"
+                                        for="role_{{ $role->id }}">
                                         <input
-                                            class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                                            name="roles[]" type="checkbox" value="{{ $role->name }}"
-                                            {{ $user->hasRole($role->name) ? 'checked' : '' }}>
+                                            class="h-4 w-4 rounded border-gray-300 text-blue-600 transition focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                                            id="role_{{ $role->id }}" name="roles[]" type="checkbox"
+                                            value="{{ $role->name }}" @checked($user->hasRole($role->name))>
                                         <span
-                                            class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ ucfirst($role->name) }}</span>
+                                            class="ml-2 text-sm text-gray-600 transition group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400">
+                                            {{ ucfirst($role->name) }}
+                                        </span>
                                     </label>
                                 @endforeach
                             </div>

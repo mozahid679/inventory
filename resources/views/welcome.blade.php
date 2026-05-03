@@ -218,7 +218,7 @@
                         <td class="px-6 py-5 font-medium">MacBook Pro M3 Max 16"</td>
                         <td class="px-6 py-5 text-gray-500">IT Hardware</td>
                         <td class="px-6 py-5"><span
-                                class="rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1 text-[10px] font-bold text-green-500">ACTIVE</span>
+                                class="rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1 text-xs font-bold text-green-500">ACTIVE</span>
                         </td>
                         <td class="px-6 py-5 text-gray-500">Sarah Jenkins</td>
                     </tr>
@@ -227,7 +227,7 @@
                         <td class="px-6 py-5 font-medium">Dell UltraSharp 32" 4K</td>
                         <td class="px-6 py-5 text-gray-500">Peripheral</td>
                         <td class="px-6 py-5"><span
-                                class="rounded-full border border-yellow-500/20 bg-yellow-500/10 px-3 py-1 text-[10px] font-bold text-yellow-500">MAINTENANCE</span>
+                                class="rounded-full border border-yellow-500/20 bg-yellow-500/10 px-3 py-1 text-xs font-bold text-yellow-500">MAINTENANCE</span>
                         </td>
                         <td class="px-6 py-5 text-gray-500">Warehouse A</td>
                     </tr>
@@ -241,8 +241,7 @@
             <div class="flex flex-col items-start justify-between gap-12 md:flex-row">
                 <div class="max-w-sm">
                     <div class="mb-6 flex items-center gap-2 text-xl font-bold tracking-tighter">
-                        <div
-                            class="flex h-6 w-6 items-center justify-center rounded bg-blue-600 text-[10px] text-white">
+                        <div class="flex h-6 w-6 items-center justify-center rounded bg-blue-600 text-xs text-white">
                             AF</div>
                         ASSETFLOW
                     </div>

@@ -34,7 +34,10 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         // 2. Create the Admin Role and give it all permissions
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'admin', 'guard_name' => 'web']);
         $role->givePermissionTo(Permission::all());
+
+        Role::create(['name' => 'Approval Authority (IT)']);
+        Role::create(['name' => 'Approval Authority (Non-IT)']);
     }
 }

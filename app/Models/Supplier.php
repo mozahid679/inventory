@@ -27,4 +27,10 @@ class Supplier extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function stockIns()
+    {
+        // Ensure this matches your foreign key in the stock_ins table
+        return $this->hasMany(StockIn::class);
+    }
 }

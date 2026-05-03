@@ -34,6 +34,7 @@
                                 <tr>
                                     <th class="px-6 py-4 font-bold">#</th>
                                     <th class="px-6 py-4 font-bold">Role Name</th>
+                                    <th class="px-6 py-4 font-bold">Designation</th>
                                     <th class="px-6 py-4 font-bold">Permissions</th>
                                     <th class="px-6 py-4 text-right font-bold">Actions</th>
                                 </tr>
@@ -46,6 +47,10 @@
                                         <td
                                             class="whitespace-nowrap px-6 py-4 font-medium capitalize text-gray-900 dark:text-white">
                                             {{ $role->name }}
+                                        </td>
+                                        <td
+                                            class="whitespace-nowrap px-6 py-4 font-medium capitalize text-gray-900 dark:text-white">
+                                            {{ $role->designation }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <span
